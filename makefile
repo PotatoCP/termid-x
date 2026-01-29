@@ -1,20 +1,23 @@
 CXX = g++
-CXXFLAGS = -std=c++17 -Wall -I./include
-LDFLAGS = -lncurses
-
-SRC = src/main.cpp
-OBJ = $(SRC:.cpp=.o)
+CXXFLAGS = -std=c++23 -Wall -I./include
+LDFLAGS = -static-libstdc++ -static-libgcc
 TARGET = stock_terminal
+
+# List all source files in src/ directory
+SRC = $(wildcard src/*.cpp)
+# Convert to object files in src/ directory
+OBJ = $(SRC:src/%.cpp=src/%.o)
 
 all: $(TARGET)
 
 $(TARGET): $(OBJ)
-	$(CXX) -o $@ $^ $(LDFLAGS)
+	$(CXX) $(OBJ) $(LDFLAGS) -o $(TARGET)
 
-%.o: %.cpp
+# Rule for compiling .cpp files in src/ directory
+src/%.o: src/%.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	rm $(OBJ) $(TARGET)
+	rm -f $(OBJ) $(TARGET)
 
 .PHONY: all clean

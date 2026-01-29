@@ -1,24 +1,44 @@
+#pragma once
+
 #include <string>
-#include <vector>
+#include <map>
 #include <queue>
-
+#include <unordered_set>
 #include "order.h"
+#include "utils.h"
 
-class Entity {
-    std::string ticker_symbol;
+namespace TermidEngine {
 
-    // This will be shown to the user as the current entity price 
-    int last_traded_price;
+    class Entity {
+    public:
+        Entity(Type::TickerSymbol new_code, Type::Price new_price):
+            ticker_symbol(new_code),
+            last_traded_price(new_price),
+            deleted_order_id(),
+            pending_bid(),
+            pending_ask() {}
 
-    // {price, }
-    std::vector<std::queue<Order>> pending_bid;
-    std::vector<std::queue<Order>> pending_ask;
+        Type::TickerSymbol getTickerSymbol() const;
 
-public:
-    Entity(std::string new_code, int new_price):
-        ticker_symbol(new_code), last_traded_price(new_price), pending_bid(), pending_ask() {}
+        int getLastTradedPrice() const;
 
-    std::string getTickerSymbol() const;
+        void delete_order(Type::OrderId id);
+        void pop_bid(Type::Price price);
+        void pop_ask(Type::Price price);
+        void push_bid(Type::Price price, Type::OrderId order_id);
+        void push_ask(Type::Price price, Type::OrderId order_id);
 
-    int getLastTradedPrice() const;
-};
+    private:
+        Type::TickerSymbol ticker_symbol;
+
+        // This will be shown to the user as the current entity price 
+        Type::Price last_traded_price;
+
+        // If the order id exist in this set, ignore the bid/ask
+        std::unordered_set<Type::OrderId> deleted_order_id;
+
+        std::map<Type::Price, std::queue<Type::OrderId>, std::greater<Type::Price>> pending_bid;
+        std::map<Type::Price, std::queue<Type::OrderId>, std::less<Type::Price>> pending_ask;
+    };
+
+}

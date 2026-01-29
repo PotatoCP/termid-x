@@ -1,29 +1,35 @@
-#include <string>
+#pragma once
 
-enum class OrderType {
-    buy,
-    sell,
-};
+#include "utils.h"
 
-struct Order {
-    int order_id;
-    int user_id;
-    std::string ticker_symbol;
-    OrderType type;
-    long long order_quantity;
-    int entity_price;
+namespace TermidEngine {
 
-    Order(
-        int _order_id,
-        int _user_id,
-        std::string _ticker_symbol,
-        long long _order_quantity,
-        int _entity_price
-    ):
-        order_id(_order_id),
-        user_id(_user_id),
-        ticker_symbol(_ticker_symbol),
-        order_quantity(_order_quantity),
-        entity_price(_entity_price)
-    {}
-};
+    enum class OrderType {
+        Buy,
+        Sell,
+    };
+
+    struct Order {
+        Type::OrderId order_id;
+        Type::UserId user_id;
+        Type::TickerSymbol ticker_symbol;
+        OrderType type;
+        Type::Quantity order_quantity;
+        Type::Price entity_price;
+
+        Order(
+            Type::OrderId _order_id,
+            Type::UserId _user_id,
+            Type::TickerSymbol _ticker_symbol,
+            Type::Quantity _order_quantity,
+            Type::Price _entity_price
+        ):
+            order_id(_order_id),
+            user_id(_user_id),
+            ticker_symbol(_ticker_symbol),
+            order_quantity(_order_quantity),
+            entity_price(_entity_price)
+        {}
+    };
+
+}
