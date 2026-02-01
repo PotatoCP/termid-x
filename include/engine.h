@@ -1,7 +1,6 @@
 #pragma once
 
 #include <unordered_map>
-#include <memory>
 
 #include "utils.h"
 #include "order.h"
@@ -12,16 +11,29 @@ namespace TermidEngine {
 
     class MarketEngine {
     public:
-        MarketEngine() {}
+        MarketEngine(): open_orders(), entities(), accounts(), latest_order_id(0) {}
 
-        void place_order(Order order);
+        void place_bid(
+            Type::UserId user_id,
+            Type::TickerSymbol symbol,
+            Type::Quantity order_quantity,
+            Type::Price price
+        );
+        void place_ask(
+            Type::UserId user_id,
+            Type::TickerSymbol symbol,
+            Type::Quantity order_quantity,
+            Type::Price price
+        );
         void add_entity(Type::TickerSymbol new_code, Type::Price new_price);
         void add_account(Type::UserId user_id, std::string username);
         
     private:
-        std::unordered_map<Type::OrderId, std::unique_ptr<Order>> open_orders;
-        std::unordered_map<Type::TickerSymbol, std::unique_ptr<Entity>> entities;
-        std::unordered_map<Type::UserId, std::unique_ptr<Account>> accounts;
+        std::unordered_map<Type::OrderId, Order> open_orders;
+        std::unordered_map<Type::TickerSymbol, Entity> entities;
+        std::unordered_map<Type::UserId, Account> accounts;
+
+        int latest_order_id;
     };
 
 }

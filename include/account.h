@@ -22,14 +22,15 @@ namespace TermidEngine {
 
         void insert_order_id(Type::OrderId order_id);
         void remove_order_id(Type::OrderId order_id);
-        void add_owner_entity(Type::TickerSymbol symbol, Type::Quantity quantity);
-        void remove_owner_entity(Type::TickerSymbol symbol, Type::Quantity quantity);
+        void add_owned_entity(Type::TickerSymbol symbol, Type::Quantity quantity);
+        void remove_owned_entity(Type::TickerSymbol symbol, Type::Quantity quantity);
 
     private:
-        std::string username;
         std::unordered_map<Type::TickerSymbol, Type::Quantity> owned_entities;
         std::unordered_set<Type::OrderId> open_orders_id;
+
         Type::UserId user_id;
+        std::string username;
     };
 
 }
