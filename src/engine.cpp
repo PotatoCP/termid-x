@@ -26,21 +26,25 @@ namespace TermidEngine {
             // the current bid quantity is empty or the best ask queue is empty.
             auto& order_book_queue = current_best_ask->second;
             while(!order_book_queue.empty()) {
-                auto& ask_order = this->open_orders.at(order_book_queue->front());
+                try {
+                    auto& ask_order = this->open_orders.at(order_book_queue.front());
 
-                if(ask_order.quantity >= order_quantity) {
-                    // TODO: Transaction happens with quantity amount
-
-                    // Return since we don't need t push empty empty bid
-                    return;
-                } else {
-                    // TODO: Transaction happens with ask_order.quantity amount
+                    if(ask_order.quantity >= order_quantity) {
+                        // TODO: Transaction happens with quantity amount
+    
+                        // Return since we don't need t push empty empty bid
+                        return;
+                    } else {
+                        // TODO: Transaction happens with ask_order.quantity amount
+                    }
+    
+                    order_book_queue.pop();
+                } catch (const std::out_of_range& _oor) {
+                    continue;
                 }
-
-                order_book_queue->pop();
             }
 
-            entity.pop_ask(best_ask_price);
+            entity.pop_best_ask();
         }
 
         this->open_orders.emplace(
