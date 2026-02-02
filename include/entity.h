@@ -33,6 +33,9 @@ namespace TermidEngine {
         std::vector<OrderBookPair>::reverse_iterator get_best_bid() const;
         std::vector<OrderBookPair>::reverse_iterator get_best_ask() const;
 
+        bool bid_is_empty() const;
+        bool ask_is_empty() const;
+
     private:
 
         Type::TickerSymbol ticker_symbol;

@@ -10,6 +10,39 @@ namespace TermidEngine {
     ) {
         int current_order_id = ++(this->latest_order_id);
 
+        // Match before pushing the bid
+        auto& entity = this->entities.at(symbol);
+        while(!entity.ask_is_empty()) {
+            auto current_best_ask = entity.get_best_ask();
+            Type::Price best_ask_price = current_best_ask->first;
+
+            // If the best ask price is more than the current bid price,
+            // we can't match the current order anymore.
+            if(best_ask_price > price) {
+                break;
+            }
+
+            // Iterate the queue of the best ask until either
+            // the current bid quantity is empty or the best ask queue is empty.
+            auto& order_book_queue = current_best_ask->second;
+            while(!order_book_queue.empty()) {
+                auto& ask_order = this->open_orders.at(order_book_queue->front());
+
+                if(ask_order.quantity >= order_quantity) {
+                    // TODO: Transaction happens with quantity amount
+
+                    // Return since we don't need t push empty empty bid
+                    return;
+                } else {
+                    // TODO: Transaction happens with ask_order.quantity amount
+                }
+
+                order_book_queue->pop();
+            }
+
+            entity.pop_ask(best_ask_price);
+        }
+
         this->open_orders.emplace(
             std::piecewise_construct,
             std::forward_as_tuple(current_order_id),
@@ -25,7 +58,7 @@ namespace TermidEngine {
         this->accounts[user_id].insert_order_id(current_order_id);
     }
 
-    void MarketEngine::place_bid(
+    void MarketEngine::place_ask(
         Type::UserId user_id,
         Type::TickerSymbol symbol,
         Type::Quantity order_quantity,

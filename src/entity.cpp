@@ -17,4 +17,12 @@ namespace TermidEngine {
     std::vector<Entity::OrderBookPair>::reverse_iterator Entity::get_best_ask() const {
         return (this->pending_ask).rbegin();
     }
+
+    bool Entity::bid_is_empty() const {
+        return this->pending_bid.empty();
+    }
+
+    bool Entity::ask_is_empty() const {
+        return this->pending_ask.empty();
+    }
 }
