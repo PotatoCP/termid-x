@@ -1,12 +1,13 @@
 #pragma once
 
 #include <iostream>
+#include <cstdint>
 
 namespace Type {
-    using Price = std::int32_t;
-    using Quantity = std::uint32_t;
-    using OrderId = std::uint32_t;
+    using Price = int32_t;
+    using Quantity = uint32_t;
+    using OrderId = uint32_t;
     using TickerSymbol = std::string;
-    using UserId = std::uint32_t;
+    using UserId = uint32_t;
 }
 

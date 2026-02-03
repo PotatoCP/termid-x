@@ -6,6 +6,7 @@
 #include "order.h"
 #include "entity.h"
 #include "account.h"
+#include "trade.h"
 
 namespace TermidEngine {
 
@@ -27,11 +28,12 @@ namespace TermidEngine {
         );
         void add_entity(Type::TickerSymbol new_code, Type::Price new_price);
         void add_account(Type::UserId user_id, std::string username);
-        
+
     private:
         std::unordered_map<Type::OrderId, Order> open_orders;
         std::unordered_map<Type::TickerSymbol, Entity> entities;
         std::unordered_map<Type::UserId, Account> accounts;
+        std::vector<Trade> trade_history;
 
         int latest_order_id;
     };

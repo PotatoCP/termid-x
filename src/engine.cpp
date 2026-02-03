@@ -30,8 +30,13 @@ namespace TermidEngine {
                     auto& ask_order = this->open_orders.at(order_book_queue.front());
 
                     if(ask_order.quantity >= order_quantity) {
-                        // TODO: Transaction happens with quantity amount
-    
+                        trade_history.emplace_back(
+                            user_id,
+                            ask_order.user_id,
+                            order_quantity,
+                            price
+                        );
+
                         // Return since we don't need t push empty empty bid
                         return;
                     } else {
