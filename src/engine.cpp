@@ -1,6 +1,26 @@
+#include <algorithm>
+
 #include "engine.h"
 
 namespace TermidEngine {
+
+    void MarketEngine::do_transaction(
+        Type::UserId buyer_id, 
+        Type::UserId seller_id, 
+        Type::TickerSymbol entity_symbol, 
+        Type::Quantity order_quantity, 
+        Type::Price order_price
+    ) {
+        this->trade_history.emplace_back(
+            buyer_id,
+            seller_id,
+            entity_symbol,
+            order_quantity,
+            order_price
+        );
+
+        // TODO: Change account entities ownership
+    }
 
     void MarketEngine::place_bid(
         Type::UserId user_id,
@@ -11,13 +31,19 @@ namespace TermidEngine {
         int current_order_id = ++(this->latest_order_id);
 
         // Match before pushing the bid
-        auto& entity = this->entities.at(symbol);
+        auto entity_it = this->entities.find(symbol);
+        if(entity_it == this->entities.end()){
+            return;
+        }
+
+        auto &entity = entity_it->second;
+
         while(!entity.ask_is_empty()) {
             auto current_best_ask = entity.get_best_ask();
             Type::Price best_ask_price = current_best_ask->first;
 
             // If the best ask price is more than the current bid price,
-            // we can't match the current order anymore.
+            // we can't match the current order.
             if(best_ask_price > price) {
                 break;
             }
@@ -26,26 +52,35 @@ namespace TermidEngine {
             // the current bid quantity is empty or the best ask queue is empty.
             auto& order_book_queue = current_best_ask->second;
             while(!order_book_queue.empty()) {
-                try {
-                    auto& ask_order = this->open_orders.at(order_book_queue.front());
+                auto ask_order_it = this->open_orders.find(order_book_queue.front());
 
-                    if(ask_order.quantity >= order_quantity) {
-                        trade_history.emplace_back(
-                            user_id,
-                            ask_order.user_id,
-                            order_quantity,
-                            price
-                        );
-
-                        // Return since we don't need t push empty empty bid
-                        return;
-                    } else {
-                        // TODO: Transaction happens with ask_order.quantity amount
-                    }
-    
+                if(ask_order_it == this->open_orders.end()){
                     order_book_queue.pop();
-                } catch (const std::out_of_range& _oor) {
                     continue;
+                }
+
+                auto& ask_order = ask_order_it->second;
+
+                Type::Quantity trade_quantity = std::min(order_quantity, ask_order.quantity);
+
+                this->do_transaction(
+                    user_id,
+                    ask_order.user_id,
+                    symbol,
+                    trade_quantity,
+                    best_ask_price
+                );
+
+                ask_order.quantity -= trade_quantity;
+                order_quantity -= trade_quantity;
+
+                if(ask_order.quantity == 0) {
+                    this->open_orders.erase(order_book_queue.front());
+                    order_book_queue.pop();
+                } 
+
+                if(order_quantity == 0) {
+                    return;
                 }
             }
 
