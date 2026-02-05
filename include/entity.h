@@ -44,6 +44,9 @@ namespace TermidEngine {
 
         // Using reversed std::vector instead of std::map for the order book
         // Inspired from http://youtube.com/watch?v=sX2nF1fW7kI
+        // TLDR: the activities happen mostly at the top of the order book,
+        // so using vectors with reverse iterator ensures most activities happen
+        // at the end of the vectors.
         std::vector<OrderBookPair> pending_bid;
         std::vector<OrderBookPair> pending_ask;
     };
