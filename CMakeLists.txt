@@ -24,7 +24,6 @@ set(SOURCES
 	src/account.cpp
 	src/engine.cpp
 	src/entity.cpp
-	src/stock.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES})

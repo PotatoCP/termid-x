@@ -27,6 +27,7 @@ namespace TermidEngine {
         void pop_best_ask();
         void push_bid(Type::Currency price, Type::OrderId order_id);
         void push_ask(Type::Currency price, Type::OrderId order_id);
+        void setLastTradedPrice(Type::Currency new_price);
 
         std::vector<OrderBookPair>::reverse_iterator get_best_bid();
         std::vector<OrderBookPair>::reverse_iterator get_best_ask();

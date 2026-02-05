@@ -66,6 +66,10 @@ namespace TermidEngine {
         );
     }
 
+    void Entity::setLastTradedPrice(Type::Currency new_price) {
+        this->last_traded_price = new_price;
+    }
+
     bool Entity::bid_is_empty() const {
         return this->pending_bid.empty();
     }

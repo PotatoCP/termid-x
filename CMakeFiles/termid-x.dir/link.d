@@ -6,7 +6,6 @@ termid-x: \
   CMakeFiles/termid-x.dir/src/account.cpp.o \
   CMakeFiles/termid-x.dir/src/engine.cpp.o \
   CMakeFiles/termid-x.dir/src/entity.cpp.o \
-  CMakeFiles/termid-x.dir/src/stock.cpp.o \
   /usr/lib/gcc/x86_64-redhat-linux/15/libstdc++.so \
   /usr/lib/gcc/x86_64-redhat-linux/15/../../../../lib64/libm.so \
   /usr/lib/gcc/x86_64-redhat-linux/15/../../../../lib64/libm.so \
@@ -48,8 +47,6 @@ CMakeFiles/termid-x.dir/src/account.cpp.o:
 CMakeFiles/termid-x.dir/src/engine.cpp.o:
 
 CMakeFiles/termid-x.dir/src/entity.cpp.o:
-
-CMakeFiles/termid-x.dir/src/stock.cpp.o:
 
 /usr/lib/gcc/x86_64-redhat-linux/15/libstdc++.so:
 

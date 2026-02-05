@@ -8,8 +8,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/termid-x.dir/src/entity.cpp.o.d"
   "CMakeFiles/termid-x.dir/src/main.cpp.o"
   "CMakeFiles/termid-x.dir/src/main.cpp.o.d"
-  "CMakeFiles/termid-x.dir/src/stock.cpp.o"
-  "CMakeFiles/termid-x.dir/src/stock.cpp.o.d"
   "termid-x"
   "termid-x.pdb"
 )

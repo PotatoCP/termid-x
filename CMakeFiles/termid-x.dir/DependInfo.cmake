@@ -12,7 +12,6 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/potatocp/stock-terminal/termid-x/src/engine.cpp" "CMakeFiles/termid-x.dir/src/engine.cpp.o" "gcc" "CMakeFiles/termid-x.dir/src/engine.cpp.o.d"
   "/home/potatocp/stock-terminal/termid-x/src/entity.cpp" "CMakeFiles/termid-x.dir/src/entity.cpp.o" "gcc" "CMakeFiles/termid-x.dir/src/entity.cpp.o.d"
   "/home/potatocp/stock-terminal/termid-x/src/main.cpp" "CMakeFiles/termid-x.dir/src/main.cpp.o" "gcc" "CMakeFiles/termid-x.dir/src/main.cpp.o.d"
-  "/home/potatocp/stock-terminal/termid-x/src/stock.cpp" "CMakeFiles/termid-x.dir/src/stock.cpp.o" "gcc" "CMakeFiles/termid-x.dir/src/stock.cpp.o.d"
   "" "termid-x" "gcc" "CMakeFiles/termid-x.dir/link.d"
   )
 

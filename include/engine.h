@@ -34,7 +34,13 @@ namespace TermidEngine {
             Type::Currency order_price
         );
         void add_entity(Type::TickerSymbol new_code, Type::Currency new_price);
-        void add_account(Type::UserId user_id, Type::UserName username);
+        void add_account(
+            Type::UserId user_id,
+            Type::UserName username,
+            Type::Currency initial_balance = 0
+        );
+
+        Type::Currency get_entity_price(Type::TickerSymbol symbol) const;
 
     private:
         std::unordered_map<Type::OrderId, Order> open_orders;

@@ -21,6 +21,7 @@ namespace TermidEngine {
         );
         this->accounts.at(buyer_id).bought_entity(entity_symbol, order_price, order_quantity);
         this->accounts.at(seller_id).sold_entity(entity_symbol, order_price, order_quantity);
+        this->entities.at(entity_symbol).setLastTradedPrice(order_price);
     }
 
     void MarketEngine::place_bid(
@@ -108,6 +109,7 @@ namespace TermidEngine {
                 price
             )
         );
+        entity.push_bid(price, current_order_id);
         account_it->second.insert_order_id(current_order_id);
     }
 
@@ -196,6 +198,7 @@ namespace TermidEngine {
                 price
             )
         );
+        entity.push_ask(price, current_order_id);
         account_it->second.insert_order_id(current_order_id);
     }
 
@@ -207,12 +210,26 @@ namespace TermidEngine {
         );
     }
 
-    void MarketEngine::add_account(Type::UserId user_id, Type::UserName username) {
+    void MarketEngine::add_account(
+        Type::UserId user_id,
+        Type::UserName username,
+        Type::Currency initial_balance
+    ) {
         this->accounts.emplace(
             std::piecewise_construct,
             std::forward_as_tuple(user_id),
-            std::forward_as_tuple(user_id, username)
+            std::forward_as_tuple(user_id, username, initial_balance)
         );
+    }
+
+    Type::Currency MarketEngine::get_entity_price(Type::TickerSymbol symbol) const {
+        auto entity_it = this->entities.find(symbol);
+        if(entity_it == this->entities.end()){
+            // If the entity doesn't exist, return -1 as the price.
+            return -1;
+        }
+
+        return entity_it->second.getLastTradedPrice();
     }
 
 }
