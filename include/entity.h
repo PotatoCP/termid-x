@@ -28,8 +28,8 @@ namespace TermidEngine {
         void push_bid(Type::Currency price, Type::OrderId order_id);
         void push_ask(Type::Currency price, Type::OrderId order_id);
 
-        std::vector<OrderBookPair>::reverse_iterator get_best_bid() const;
-        std::vector<OrderBookPair>::reverse_iterator get_best_ask() const;
+        std::vector<OrderBookPair>::reverse_iterator get_best_bid();
+        std::vector<OrderBookPair>::reverse_iterator get_best_ask();
 
         bool bid_is_empty() const;
         bool ask_is_empty() const;

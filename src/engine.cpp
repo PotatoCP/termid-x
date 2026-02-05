@@ -4,6 +4,7 @@
 
 namespace TermidEngine {
 
+    // Buyer and seller must be guaranteed to exist before calling this function
     void MarketEngine::do_transaction(
         Type::UserId buyer_id, 
         Type::UserId seller_id, 
@@ -18,8 +19,8 @@ namespace TermidEngine {
             order_quantity,
             order_price
         );
-        this->accounts[buyer_id].bought_entity(entity_symbol, order_price, order_quantity);
-        this->accounts[seller_id].sold_entity(entity_symbol, order_price, order_quantity);
+        this->accounts.at(buyer_id).bought_entity(entity_symbol, order_price, order_quantity);
+        this->accounts.at(seller_id).sold_entity(entity_symbol, order_price, order_quantity);
     }
 
     void MarketEngine::place_bid(
@@ -30,6 +31,13 @@ namespace TermidEngine {
     ) {
         auto entity_it = this->entities.find(symbol);
         if(entity_it == this->entities.end()){
+            // If the entity doesn't exist, we can't place the order.
+            return;
+        }
+
+        auto account_it= this->accounts.find(user_id);
+        if(account_it == this->accounts.end()){
+            // Account must exist to place an order.
             return;
         }
 
@@ -74,7 +82,7 @@ namespace TermidEngine {
 
                 if(ask_order.quantity == 0) {
                     this->open_orders.erase(order_book_queue.front());
-                    this->accounts[ask_order.user_id].remove_order_id(order_book_queue.front());
+                    this->accounts.at(ask_order.user_id).remove_order_id(order_book_queue.front());
                     order_book_queue.pop();
                 } 
 
@@ -100,7 +108,7 @@ namespace TermidEngine {
                 price
             )
         );
-        this->accounts[user_id].insert_order_id(current_order_id);
+        account_it->second.insert_order_id(current_order_id);
     }
 
     void MarketEngine::place_ask(
@@ -109,14 +117,21 @@ namespace TermidEngine {
         Type::Quantity order_quantity,
         Type::Currency price
     ) {
-        // Match before pushing the bid
         auto entity_it = this->entities.find(symbol);
         if(entity_it == this->entities.end()){
+            // If the entity doesn't exist, we can't place the order.
+            return;
+        }
+
+        auto account_it= this->accounts.find(user_id);
+        if(account_it == this->accounts.end()){
+            // Account must exist to place an order.
             return;
         }
 
         auto &entity = entity_it->second;
 
+        // Match before pushing the ask
         while(!entity.bid_is_empty()) {
             auto current_best_bid = entity.get_best_bid();
             Type::Currency best_bid_price = current_best_bid->first;
@@ -155,7 +170,7 @@ namespace TermidEngine {
 
                 if(bid_order.quantity == 0) {
                     this->open_orders.erase(order_book_queue.front());
-                    this->accounts[bid_order.user_id].remove_order_id(order_book_queue.front());
+                    this->accounts.at(bid_order.user_id).remove_order_id(order_book_queue.front());
                     order_book_queue.pop();
                 } 
 
@@ -181,7 +196,7 @@ namespace TermidEngine {
                 price
             )
         );
-        this->accounts[user_id].insert_order_id(current_order_id);
+        account_it->second.insert_order_id(current_order_id);
     }
 
     void MarketEngine::add_entity(Type::TickerSymbol symbol, Type::Currency price) {

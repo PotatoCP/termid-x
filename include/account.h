@@ -4,17 +4,25 @@
 #include <unordered_set>
 
 #include "utils.h"
-#include "engine.h"
 
 namespace TermidEngine {
 
     class Account {
     public:
-        Account(Type::UserId _user_id, Type::UserName _username):
+        Account(Type::UserId _user_id, Type::UserName _username, Type::Currency _initial_balance):
+            owned_entities(),
+            open_orders_id(),
             user_id(_user_id),
             username(_username),
+            cash_balance(_initial_balance)
+        {}
+
+        Account(Type::UserId _user_id, Type::UserName _username):
             owned_entities(),
-            open_orders_id()
+            open_orders_id(),
+            user_id(_user_id),
+            username(_username),
+            cash_balance(0)
         {}
 
         void insert_order_id(Type::OrderId order_id);

@@ -10,12 +10,12 @@ namespace TermidEngine {
         return this->last_traded_price;
     }
 
-    std::vector<Entity::OrderBookPair>::reverse_iterator Entity::get_best_bid() const {
-        return (this->pending_bid).rbegin();
+    std::vector<Entity::OrderBookPair>::reverse_iterator Entity::get_best_bid() {
+        return this->pending_bid.rbegin();
     }
 
-    std::vector<Entity::OrderBookPair>::reverse_iterator Entity::get_best_ask() const {
-        return (this->pending_ask).rbegin();
+    std::vector<Entity::OrderBookPair>::reverse_iterator Entity::get_best_ask() {
+        return this->pending_ask.rbegin();
     }
 
     void Entity::pop_best_bid() {
