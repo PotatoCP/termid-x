@@ -28,9 +28,6 @@ namespace TermidEngine {
         Type::Quantity order_quantity,
         Type::Price price
     ) {
-        int current_order_id = ++(this->latest_order_id);
-
-        // Match before pushing the bid
         auto entity_it = this->entities.find(symbol);
         if(entity_it == this->entities.end()){
             return;
@@ -38,6 +35,7 @@ namespace TermidEngine {
 
         auto &entity = entity_it->second;
 
+        // Match before pushing the bid
         while(!entity.ask_is_empty()) {
             auto current_best_ask = entity.get_best_ask();
             Type::Price best_ask_price = current_best_ask->first;
@@ -79,6 +77,7 @@ namespace TermidEngine {
                     order_book_queue.pop();
                 } 
 
+                // If the current order quantity is zero, we don't need to store the order.
                 if(order_quantity == 0) {
                     return;
                 }
@@ -87,6 +86,7 @@ namespace TermidEngine {
             entity.pop_best_ask();
         }
 
+        int current_order_id = ++(this->latest_order_id);
         this->open_orders.emplace(
             std::piecewise_construct,
             std::forward_as_tuple(current_order_id),
@@ -108,8 +108,65 @@ namespace TermidEngine {
         Type::Quantity order_quantity,
         Type::Price price
     ) {
-        int current_order_id = ++(this->latest_order_id);
+        // Match before pushing the bid
+        auto entity_it = this->entities.find(symbol);
+        if(entity_it == this->entities.end()){
+            return;
+        }
 
+        auto &entity = entity_it->second;
+
+        while(!entity.bid_is_empty()) {
+            auto current_best_bid = entity.get_best_bid();
+            Type::Price best_bid_price = current_best_bid->first;
+
+            // If the best bid price is less than the current ask price,
+            // we can't match the current order.
+            if(best_bid_price < price) {
+                break;
+            }
+
+            // Iterate the queue of the best bid until either
+            // the current ask quantity is empty or the best bid queue is empty.
+            auto& order_book_queue = current_best_bid->second;
+            while(!order_book_queue.empty()) {
+                auto bid_order_it = this->open_orders.find(order_book_queue.front());
+
+                if(bid_order_it == this->open_orders.end()){
+                    order_book_queue.pop();
+                    continue;
+                }
+
+                auto& bid_order = bid_order_it->second;
+
+                Type::Quantity trade_quantity = std::min(order_quantity, bid_order.quantity);
+
+                this->do_transaction(
+                    bid_order.user_id,
+                    user_id,
+                    symbol,
+                    trade_quantity,
+                    best_bid_price
+                );
+
+                bid_order.quantity -= trade_quantity;
+                order_quantity -= trade_quantity;
+
+                if(bid_order.quantity == 0) {
+                    this->open_orders.erase(order_book_queue.front());
+                    order_book_queue.pop();
+                } 
+
+                // If the current order quantity is zero, we don't need to store the order.
+                if(order_quantity == 0) {
+                    return;
+                }
+            }
+
+            entity.pop_best_bid();
+        }
+
+        int current_order_id = ++(this->latest_order_id);
         this->open_orders.emplace(
             std::piecewise_construct,
             std::forward_as_tuple(current_order_id),
