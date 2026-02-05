@@ -1,6 +1,5 @@
 #pragma once
 
-#include <string>
 #include <unordered_map>
 #include <unordered_set>
 
@@ -11,7 +10,7 @@ namespace TermidEngine {
 
     class Account {
     public:
-        Account(Type::UserId _user_id, std::string _username):
+        Account(Type::UserId _user_id, Type::UserName _username):
             user_id(_user_id),
             username(_username),
             owned_entities(),
@@ -28,7 +27,7 @@ namespace TermidEngine {
         std::unordered_set<Type::OrderId> open_orders_id;
 
         Type::UserId user_id;
-        std::string username;
+        Type::UserName username;
         Type::Currency cash_balance;
     };
 

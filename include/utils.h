@@ -9,5 +9,6 @@ namespace Type {
     using OrderId = uint32_t;
     using TickerSymbol = std::string;
     using UserId = uint32_t;
+    using UserName = std::string;
 }
 

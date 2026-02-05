@@ -192,7 +192,7 @@ namespace TermidEngine {
         );
     }
 
-    void MarketEngine::add_account(Type::UserId user_id, std::string username) {
+    void MarketEngine::add_account(Type::UserId user_id, Type::UserName username) {
         this->accounts.emplace(
             std::piecewise_construct,
             std::forward_as_tuple(user_id),
