@@ -1,4 +1,5 @@
 .vscode
+CMakeFiles
 termid-x
 *.o
 

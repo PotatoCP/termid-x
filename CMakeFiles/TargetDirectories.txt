@@ -1,9 +1,0 @@
-/home/potatocp/stock-terminal/termid-x/CMakeFiles/termid-x.dir
-/home/potatocp/stock-terminal/termid-x/CMakeFiles/package.dir
-/home/potatocp/stock-terminal/termid-x/CMakeFiles/package_source.dir
-/home/potatocp/stock-terminal/termid-x/CMakeFiles/edit_cache.dir
-/home/potatocp/stock-terminal/termid-x/CMakeFiles/rebuild_cache.dir
-/home/potatocp/stock-terminal/termid-x/CMakeFiles/list_install_components.dir
-/home/potatocp/stock-terminal/termid-x/CMakeFiles/install.dir
-/home/potatocp/stock-terminal/termid-x/CMakeFiles/install/local.dir
-/home/potatocp/stock-terminal/termid-x/CMakeFiles/install/strip.dir
