@@ -18,8 +18,8 @@ namespace TermidEngine {
             order_quantity,
             order_price
         );
-
-        // TODO: Change account entities ownership
+        this->accounts[buyer_id].bought_entity(entity_symbol, order_price, order_quantity);
+        this->accounts[seller_id].sold_entity(entity_symbol, order_price, order_quantity);
     }
 
     void MarketEngine::place_bid(
@@ -74,6 +74,7 @@ namespace TermidEngine {
 
                 if(ask_order.quantity == 0) {
                     this->open_orders.erase(order_book_queue.front());
+                    this->accounts[ask_order.user_id].remove_order_id(order_book_queue.front());
                     order_book_queue.pop();
                 } 
 
@@ -154,6 +155,7 @@ namespace TermidEngine {
 
                 if(bid_order.quantity == 0) {
                     this->open_orders.erase(order_book_queue.front());
+                    this->accounts[bid_order.user_id].remove_order_id(order_book_queue.front());
                     order_book_queue.pop();
                 } 
 
