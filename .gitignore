@@ -1,5 +1,5 @@
 .vscode
-stock_terminal
+termid-x
 *.o
 
 cmake_install.cmake
