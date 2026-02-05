@@ -18,22 +18,22 @@ namespace TermidEngine {
             Type::UserId user_id,
             Type::TickerSymbol symbol,
             Type::Quantity order_quantity,
-            Type::Price price
+            Type::Currency price
         );
         void place_ask(
             Type::UserId user_id,
             Type::TickerSymbol symbol,
             Type::Quantity order_quantity,
-            Type::Price price
+            Type::Currency price
         );
         void do_transaction(
             Type::UserId buyer_id, 
             Type::UserId seller_id, 
             Type::TickerSymbol entity_symbol, 
             Type::Quantity order_quantity, 
-            Type::Price order_price
+            Type::Currency order_price
         );
-        void add_entity(Type::TickerSymbol new_code, Type::Price new_price);
+        void add_entity(Type::TickerSymbol new_code, Type::Currency new_price);
         void add_account(Type::UserId user_id, std::string username);
 
     private:

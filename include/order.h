@@ -15,7 +15,7 @@ namespace TermidEngine {
         Type::TickerSymbol ticker_symbol;
         OrderType type;
         Type::Quantity quantity;
-        Type::Price price;
+        Type::Currency price;
 
         Order(
             Type::OrderId _order_id,
@@ -23,7 +23,7 @@ namespace TermidEngine {
             Type::TickerSymbol _ticker_symbol,
             OrderType _type,
             Type::Quantity _quantity,
-            Type::Price _price
+            Type::Currency _price
         ):
             order_id(_order_id),
             user_id(_user_id),

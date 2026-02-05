@@ -6,7 +6,7 @@ namespace TermidEngine {
         return this->ticker_symbol;
     }
 
-    Type::Price Entity::getLastTradedPrice() const {
+    Type::Currency Entity::getLastTradedPrice() const {
         return this->last_traded_price;
     }
 
@@ -26,7 +26,7 @@ namespace TermidEngine {
         this->pending_ask.pop_back();
     }
 
-    void Entity::push_bid(Type::Price price, Type::OrderId order_id) {
+    void Entity::push_bid(Type::Currency price, Type::OrderId order_id) {
         auto it = this->pending_bid.rbegin();
         for(; it != this->pending_bid.rend(); it++) {
             if(it->first < price) {
@@ -46,7 +46,7 @@ namespace TermidEngine {
         );
     }
     
-    void Entity::push_ask(Type::Price price, Type::OrderId order_id) {
+    void Entity::push_ask(Type::Currency price, Type::OrderId order_id) {
         auto it = this->pending_ask.rbegin();
         for(; it != this->pending_ask.rend(); it++) {
             if(it->first > price) {

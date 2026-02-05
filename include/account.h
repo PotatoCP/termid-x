@@ -18,12 +18,12 @@ namespace TermidEngine {
             username(_username),
             owned_entities(),
             open_orders_id()
-        { }
+        {}
 
         void insert_order_id(Type::OrderId order_id);
         void remove_order_id(Type::OrderId order_id);
-        void add_owned_entity(Type::TickerSymbol symbol, Type::Quantity quantity);
-        void remove_owned_entity(Type::TickerSymbol symbol, Type::Quantity quantity);
+        void bought_entity(Type::TickerSymbol symbol, Type::Currency price, Type::Quantity quantity);
+        void sold_entity(Type::TickerSymbol symbol, Type::Currency price, Type::Quantity quantity);
 
     private:
         std::unordered_map<Type::TickerSymbol, Type::Quantity> owned_entities;
@@ -31,6 +31,7 @@ namespace TermidEngine {
 
         Type::UserId user_id;
         std::string username;
+        Type::Currency cash_balance;
     };
 
 }

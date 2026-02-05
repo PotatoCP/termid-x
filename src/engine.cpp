@@ -9,7 +9,7 @@ namespace TermidEngine {
         Type::UserId seller_id, 
         Type::TickerSymbol entity_symbol, 
         Type::Quantity order_quantity, 
-        Type::Price order_price
+        Type::Currency order_price
     ) {
         this->trade_history.emplace_back(
             buyer_id,
@@ -26,7 +26,7 @@ namespace TermidEngine {
         Type::UserId user_id,
         Type::TickerSymbol symbol,
         Type::Quantity order_quantity,
-        Type::Price price
+        Type::Currency price
     ) {
         auto entity_it = this->entities.find(symbol);
         if(entity_it == this->entities.end()){
@@ -38,7 +38,7 @@ namespace TermidEngine {
         // Match before pushing the bid
         while(!entity.ask_is_empty()) {
             auto current_best_ask = entity.get_best_ask();
-            Type::Price best_ask_price = current_best_ask->first;
+            Type::Currency best_ask_price = current_best_ask->first;
 
             // If the best ask price is more than the current bid price,
             // we can't match the current order.
@@ -106,7 +106,7 @@ namespace TermidEngine {
         Type::UserId user_id,
         Type::TickerSymbol symbol,
         Type::Quantity order_quantity,
-        Type::Price price
+        Type::Currency price
     ) {
         // Match before pushing the bid
         auto entity_it = this->entities.find(symbol);
@@ -118,7 +118,7 @@ namespace TermidEngine {
 
         while(!entity.bid_is_empty()) {
             auto current_best_bid = entity.get_best_bid();
-            Type::Price best_bid_price = current_best_bid->first;
+            Type::Currency best_bid_price = current_best_bid->first;
 
             // If the best bid price is less than the current ask price,
             // we can't match the current order.
@@ -182,7 +182,7 @@ namespace TermidEngine {
         this->accounts[user_id].insert_order_id(current_order_id);
     }
 
-    void MarketEngine::add_entity(Type::TickerSymbol symbol, Type::Price price) {
+    void MarketEngine::add_entity(Type::TickerSymbol symbol, Type::Currency price) {
         this->entities.emplace(
             std::piecewise_construct,
             std::forward_as_tuple(symbol),
