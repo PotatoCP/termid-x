@@ -33,13 +33,13 @@ namespace TermidEngine {
         auto entity_it = this->entities.find(symbol);
         if(entity_it == this->entities.end()){
             // If the entity doesn't exist, we can't place the order.
-            return -1;
+            return 0;
         }
 
         auto account_it= this->accounts.find(user_id);
         if(account_it == this->accounts.end()){
             // Account must exist to place an order.
-            return -1;
+            return 0;
         }
 
         auto &entity = entity_it->second;
@@ -82,14 +82,14 @@ namespace TermidEngine {
                 order_quantity -= trade_quantity;
 
                 if(ask_order.quantity == 0) {
-                    this->open_orders.erase(order_book_queue.front());
                     this->accounts.at(ask_order.user_id).remove_order_id(order_book_queue.front());
+                    this->open_orders.erase(order_book_queue.front());
                     order_book_queue.pop();
                 } 
 
                 // If the current order quantity is zero, we don't need to store the order.
                 if(order_quantity == 0) {
-                    return -1;
+                    return 0;
                 }
             }
 
@@ -123,13 +123,13 @@ namespace TermidEngine {
         auto entity_it = this->entities.find(symbol);
         if(entity_it == this->entities.end()){
             // If the entity doesn't exist, we can't place the order.
-            return -1;
+            return 0;
         }
 
         auto account_it= this->accounts.find(user_id);
         if(account_it == this->accounts.end()){
             // Account must exist to place an order.
-            return -1;
+            return 0;
         }
 
         auto &entity = entity_it->second;
@@ -179,7 +179,7 @@ namespace TermidEngine {
 
                 // If the current order quantity is zero, we don't need to store the order.
                 if(order_quantity == 0) {
-                    return -1;
+                    return 0;
                 }
             }
 
