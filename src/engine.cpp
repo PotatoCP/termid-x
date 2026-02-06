@@ -24,7 +24,7 @@ namespace TermidEngine {
         this->entities.at(entity_symbol).setLastTradedPrice(order_price);
     }
 
-    void MarketEngine::place_bid(
+    Type::OrderId MarketEngine::place_bid(
         Type::UserId user_id,
         Type::TickerSymbol symbol,
         Type::Quantity order_quantity,
@@ -33,13 +33,13 @@ namespace TermidEngine {
         auto entity_it = this->entities.find(symbol);
         if(entity_it == this->entities.end()){
             // If the entity doesn't exist, we can't place the order.
-            return;
+            return -1;
         }
 
         auto account_it= this->accounts.find(user_id);
         if(account_it == this->accounts.end()){
             // Account must exist to place an order.
-            return;
+            return -1;
         }
 
         auto &entity = entity_it->second;
@@ -89,14 +89,14 @@ namespace TermidEngine {
 
                 // If the current order quantity is zero, we don't need to store the order.
                 if(order_quantity == 0) {
-                    return;
+                    return -1;
                 }
             }
 
             entity.pop_best_ask();
         }
 
-        int current_order_id = ++(this->latest_order_id);
+        Type::OrderId current_order_id = ++(this->latest_order_id);
         this->open_orders.emplace(
             std::piecewise_construct,
             std::forward_as_tuple(current_order_id),
@@ -111,9 +111,10 @@ namespace TermidEngine {
         );
         entity.push_bid(price, current_order_id);
         account_it->second.insert_order_id(current_order_id);
+        return current_order_id;
     }
 
-    void MarketEngine::place_ask(
+    Type::OrderId MarketEngine::place_ask(
         Type::UserId user_id,
         Type::TickerSymbol symbol,
         Type::Quantity order_quantity,
@@ -122,13 +123,13 @@ namespace TermidEngine {
         auto entity_it = this->entities.find(symbol);
         if(entity_it == this->entities.end()){
             // If the entity doesn't exist, we can't place the order.
-            return;
+            return -1;
         }
 
         auto account_it= this->accounts.find(user_id);
         if(account_it == this->accounts.end()){
             // Account must exist to place an order.
-            return;
+            return -1;
         }
 
         auto &entity = entity_it->second;
@@ -178,7 +179,7 @@ namespace TermidEngine {
 
                 // If the current order quantity is zero, we don't need to store the order.
                 if(order_quantity == 0) {
-                    return;
+                    return -1;
                 }
             }
 
@@ -200,6 +201,7 @@ namespace TermidEngine {
         );
         entity.push_ask(price, current_order_id);
         account_it->second.insert_order_id(current_order_id);
+        return current_order_id;
     }
 
     void MarketEngine::add_entity(Type::TickerSymbol symbol, Type::Currency price) {

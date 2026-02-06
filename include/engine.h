@@ -14,13 +14,13 @@ namespace TermidEngine {
     public:
         MarketEngine(): open_orders(), entities(), accounts(), latest_order_id(0) {}
 
-        void place_bid(
+        Type::OrderId place_bid(
             Type::UserId user_id,
             Type::TickerSymbol symbol,
             Type::Quantity order_quantity,
             Type::Currency price
         );
-        void place_ask(
+        Type::OrderId place_ask(
             Type::UserId user_id,
             Type::TickerSymbol symbol,
             Type::Quantity order_quantity,
@@ -48,7 +48,7 @@ namespace TermidEngine {
         std::unordered_map<Type::UserId, Account> accounts;
         std::vector<Trade> trade_history;
 
-        int latest_order_id;
+        Type::OrderId latest_order_id;
     };
 
 }
