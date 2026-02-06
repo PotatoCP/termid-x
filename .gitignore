@@ -1,7 +1,8 @@
 .vscode
-termid-x
+termid-x*
 _deps
 *.o
+x64
 
 CMakeFiles
 cmake_install.cmake
@@ -10,3 +11,7 @@ CPackConfig.cmake
 CPackSourceConfig.cmake
 compile_commands.json
 Makefile
+
+*.vcxproj
+*.vcxproj.filters
+Debug
