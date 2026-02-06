@@ -1,6 +1,6 @@
 # Termid-x
 
-Termid-x ("Terminal IDX") is a small C++ project that implements a simple order/market engine. Unlike most order book projects, we keep track of order books of many entities. We also keep store the user account that buy or sells each entity.
+Termid-x ("Terminal IDX") is a C++ project that implements a simple order/market engine. There is an order book for each entity, and we also track the owned entities of each account in the market.
 
 ## Market Engine
 This is the core of our project. It stores the open orders, all entities, and all accounts. We also keep track of trade histories here.
@@ -13,7 +13,11 @@ Each entity will hold its own order book. Instead of using `std::map`, we use re
 ## Account
 Stores the account's information, such as cash balance and owned entities. It also stores the order id that was openned by the account to make it easier to get the order by each account. It also makes it easier to modify the order based on the account (for example deleting all order by a specific account).
 
-## Prerequisites
+---
+
+## Technical Details
+
+### Prerequisites
 
 - A C++ compiler with C++17 support (GCC, Clang, MSVC)
 - CMake >= 3.10
@@ -26,7 +30,7 @@ sudo apt update
 sudo apt install build-essential cmake
 ```
 
-## Build & Run
+### Build & Run
 
 The project uses a conventional out-of-source CMake build. From the repository root (`termid-x`) run:
 
@@ -39,10 +43,3 @@ Then run the binary:
 ```bash
 ./termid-x
 ```
-
-## Project layout
-
-- `include/` - public headers for Account, Engine, Entity, Order, Stock, Trade and utilities
-- `src/` - implementation files (CPP)
-- `CMakeLists.txt` - top-level CMake project file
-- `README.md` - this file
