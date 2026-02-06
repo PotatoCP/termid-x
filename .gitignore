@@ -1,10 +1,12 @@
 .vscode
-CMakeFiles
 termid-x
+_deps
 *.o
 
+CMakeFiles
 cmake_install.cmake
 CMakeCache.txt
 CPackConfig.cmake
 CPackSourceConfig.cmake
+compile_commands.json
 Makefile

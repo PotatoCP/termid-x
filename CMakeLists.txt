@@ -43,3 +43,22 @@ install(TARGETS ${PROJECT_NAME}
 # Simple CPack support for packaging (optional)
 include(CPack)
 
+include(FetchContent)
+
+FetchContent_Declare(
+	ftxui
+	GIT_REPOSITORY https://github.com/ArthurSonzogni/FTXUI.git
+	GIT_TAG v6.1.9  # Replace with a version, tag, or commit hash if needed
+)
+
+FetchContent_MakeAvailable(ftxui)
+
+# Link FTXUI imported targets to the project's executable (don't create a second
+# "main" target). If your project name is `${PROJECT_NAME}` (set above), link
+# the ftxui libraries to that target so your sources can use the library.
+target_link_libraries(${PROJECT_NAME}
+	PRIVATE
+		ftxui::screen
+		ftxui::dom
+		ftxui::component
+)
