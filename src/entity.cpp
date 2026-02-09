@@ -34,7 +34,7 @@ namespace TermidEngine {
             }
             if(it->first == price) {
                 it->second.push(order_id);
-                break;
+                return;
             }
         }
         std::queue<Type::OrderId> order_id_queue({order_id});
@@ -54,7 +54,7 @@ namespace TermidEngine {
             }
             if(it->first == price) {
                 it->second.push(order_id);
-                break;
+                return;
             }
         }
         std::queue<Type::OrderId> order_id_queue({order_id});

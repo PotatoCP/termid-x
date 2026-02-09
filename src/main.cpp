@@ -19,12 +19,12 @@ int main() {
 
         std::random_device rd{};
         std::mt19937 gen{rd()};
-        std::normal_distribution price_generator{400.0, 200.0};
+        std::normal_distribution price_generator{400.0, 1.0};
 
         auto random_price = [&price_generator, &gen]{ return std::lround(price_generator(gen)); };
 
         double total_time_ms = 0.0;
-        int total_orders = 100'000;
+        int total_orders = 100;
 
         struct OrderTest {
             std::string symbol;
@@ -50,8 +50,10 @@ int main() {
             } else {
                 market_engine.place_ask(order.user_id, order.symbol, order.quantity, order.price);
             }
-             auto end_time = std::chrono::high_resolution_clock::now();
+            auto end_time = std::chrono::high_resolution_clock::now();
             total_time_ms += std::chrono::duration_cast<std::chrono::nanoseconds>(end_time - start_time).count();
+            std::cout << "Placed " << (order.is_bid ? "Bid" : "Ask") << " for " << order.quantity << " of " << order.symbol << " at price " << order.price << " by user " << order.user_id << "\n";
+            std::cout << "Current Price of TUNA: " << market_engine.get_entity_price("TUNA") << "\n";
         }
 
         std::cout << "Final Price of TUNA: " << market_engine.get_entity_price("TUNA") << "\n";
