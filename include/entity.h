@@ -2,7 +2,7 @@
 
 #include <string>
 #include <vector>
-#include <queue>
+#include <deque>
 #include <unordered_set>
 #include <unordered_map>
 #include "order.h"
@@ -12,7 +12,7 @@ namespace TermidEngine {
 
     class Entity {
     public:
-        using OrderBookPair = std::pair<Type::Currency, std::queue<Type::OrderId>>;
+        using OrderBookPair = std::pair<Type::Currency, std::deque<Type::OrderId>>;
 
         Entity(Type::TickerSymbol new_code, Type::Currency new_price):
             ticker_symbol(new_code),

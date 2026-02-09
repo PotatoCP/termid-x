@@ -62,7 +62,7 @@ namespace TermidEngine {
                 auto ask_order_it = this->open_orders.find(order_book_queue.front());
 
                 if(ask_order_it == this->open_orders.end()){
-                    order_book_queue.pop();
+                    order_book_queue.pop_front();
                     continue;
                 }
 
@@ -84,7 +84,7 @@ namespace TermidEngine {
                 if(ask_order.quantity == 0) {
                     this->accounts.at(ask_order.user_id).remove_order_id(order_book_queue.front());
                     this->open_orders.erase(order_book_queue.front());
-                    order_book_queue.pop();
+                    order_book_queue.pop_front();
                 } 
 
                 // If the current order quantity is zero, we don't need to store the order.
@@ -152,7 +152,7 @@ namespace TermidEngine {
                 auto bid_order_it = this->open_orders.find(order_book_queue.front());
 
                 if(bid_order_it == this->open_orders.end()){
-                    order_book_queue.pop();
+                    order_book_queue.pop_front();
                     continue;
                 }
 
@@ -174,7 +174,7 @@ namespace TermidEngine {
                 if(bid_order.quantity == 0) {
                     this->accounts.at(bid_order.user_id).remove_order_id(order_book_queue.front());
                     this->open_orders.erase(order_book_queue.front());
-                    order_book_queue.pop();
+                    order_book_queue.pop_front();
                 } 
 
                 // If the current order quantity is zero, we don't need to store the order.

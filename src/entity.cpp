@@ -28,16 +28,16 @@ namespace TermidEngine {
 
     void Entity::push_bid(Type::Currency price, Type::OrderId order_id) {
         auto it = this->pending_bid.rbegin();
-        for(; it != this->pending_bid.rend(); it++) {
+        for(; it != this->pending_bid.rend(); ++it) {
             if(it->first < price) {
                 break;
             }
             if(it->first == price) {
-                it->second.push(order_id);
+                it->second.push_back(order_id);
                 return;
             }
         }
-        std::queue<Type::OrderId> order_id_queue({order_id});
+        std::deque<Type::OrderId> order_id_queue({order_id});
         this->pending_bid.emplace(
             it.base(),
             std::piecewise_construct,
@@ -48,16 +48,16 @@ namespace TermidEngine {
     
     void Entity::push_ask(Type::Currency price, Type::OrderId order_id) {
         auto it = this->pending_ask.rbegin();
-        for(; it != this->pending_ask.rend(); it++) {
+        for(; it != this->pending_ask.rend(); ++it) {
             if(it->first > price) {
                 break;
             }
             if(it->first == price) {
-                it->second.push(order_id);
+                it->second.push_back(order_id);
                 return;
             }
         }
-        std::queue<Type::OrderId> order_id_queue({order_id});
+        std::deque<Type::OrderId> order_id_queue({order_id});
         this->pending_ask.emplace(
             it.base(),
             std::piecewise_construct,
