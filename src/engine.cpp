@@ -6,10 +6,10 @@ namespace TermidEngine {
 
     // Buyer and seller must be guaranteed to exist before calling this function
     void MarketEngine::do_transaction(
-        Type::UserId buyer_id, 
-        Type::UserId seller_id, 
-        Type::TickerSymbol entity_symbol, 
-        Type::Quantity order_quantity, 
+        Type::UserId buyer_id,
+        Type::UserId seller_id,
+        Type::TickerSymbol entity_symbol,
+        Type::Quantity order_quantity,
         Type::Currency order_price
     ) {
         this->trade_history.emplace_back(

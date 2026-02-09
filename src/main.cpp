@@ -1,6 +1,7 @@
 #include <iostream>
 #include <thread>
 #include <random>
+#include <chrono>
 
 #include "engine.h"
 
@@ -55,9 +56,10 @@ int main() {
                 market_engine.place_ask(order.user_id, order.symbol, order.quantity, order.price);
             }
             auto end_time = std::chrono::high_resolution_clock::now();
-            double time_taken = std::chrono::duration_cast<std::chrono::nanoseconds>(end_time - start_time).count();
-            order_times.push_back(time_taken);
-            total_time_ms += time_taken;
+            auto time_taken = std::chrono::duration_cast<std::chrono::nanoseconds>(end_time - start_time).count();
+            double time_taken_ns = static_cast<double>(time_taken);
+            order_times.push_back(time_taken_ns);
+            total_time_ms += time_taken_ns;
         }
 
         std::cout << "Final Price of TUNA: " << market_engine.get_entity_price("TUNA") << "\n";
