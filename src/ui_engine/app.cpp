@@ -1,3 +1,5 @@
+#pragma once
+
 #include "ftxui/component/component.hpp"          // for ScreenInteractive, Component
 #include "ftxui/component/screen_interactive.hpp" // for ScreenInteractive, Component
 

@@ -3,8 +3,8 @@
 #include <random>
 #include <chrono>
 
-#include "engine.h"
-#include "app.cpp"
+#include "backend_engine/engine.h"
+#include "ui_engine/app.cpp"
 
 void test_engine() {
     TermidEngine::MarketEngine market_engine;
