@@ -14,41 +14,41 @@ namespace TermidEngine {
     public:
         MarketEngine(): open_orders(), entities(), accounts(), latest_order_id(0) {}
 
-        Type::OrderId place_bid(
-            Type::UserId user_id,
-            Type::TickerSymbol symbol,
-            Type::Quantity order_quantity,
-            Type::Currency price
+        TermidType::OrderId place_bid(
+            TermidType::UserId user_id,
+            TermidType::TickerSymbol symbol,
+            TermidType::Quantity order_quantity,
+            TermidType::Currency price
         );
-        Type::OrderId place_ask(
-            Type::UserId user_id,
-            Type::TickerSymbol symbol,
-            Type::Quantity order_quantity,
-            Type::Currency price
+        TermidType::OrderId place_ask(
+            TermidType::UserId user_id,
+            TermidType::TickerSymbol symbol,
+            TermidType::Quantity order_quantity,
+            TermidType::Currency price
         );
         void do_transaction(
-            Type::UserId buyer_id, 
-            Type::UserId seller_id, 
-            Type::TickerSymbol entity_symbol, 
-            Type::Quantity order_quantity, 
-            Type::Currency order_price
+            TermidType::UserId buyer_id, 
+            TermidType::UserId seller_id, 
+            TermidType::TickerSymbol entity_symbol, 
+            TermidType::Quantity order_quantity, 
+            TermidType::Currency order_price
         );
-        void add_entity(Type::TickerSymbol new_code, Type::Currency new_price);
+        void add_entity(TermidType::TickerSymbol new_code, TermidType::Currency new_price);
         void add_account(
-            Type::UserId user_id,
-            Type::UserName username,
-            Type::Currency initial_balance = 0
+            TermidType::UserId user_id,
+            TermidType::UserName username,
+            TermidType::Currency initial_balance = 0
         );
 
-        Type::Currency get_entity_price(Type::TickerSymbol symbol) const;
+        TermidType::Currency get_entity_price(TermidType::TickerSymbol symbol) const;
 
     private:
-        std::unordered_map<Type::OrderId, Order> open_orders;
-        std::unordered_map<Type::TickerSymbol, Entity> entities;
-        std::unordered_map<Type::UserId, Account> accounts;
+        std::unordered_map<TermidType::OrderId, Order> open_orders;
+        std::unordered_map<TermidType::TickerSymbol, Entity> entities;
+        std::unordered_map<TermidType::UserId, Account> accounts;
         std::vector<Trade> trade_history;
 
-        Type::OrderId latest_order_id;
+        TermidType::OrderId latest_order_id;
     };
 
 }

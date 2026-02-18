@@ -9,7 +9,7 @@ namespace TermidEngine {
 
     class Account {
     public:
-        Account(Type::UserId _user_id, Type::UserName _username, Type::Currency _initial_balance):
+        Account(TermidType::UserId _user_id, TermidType::UserName _username, TermidType::Currency _initial_balance):
             owned_entities(),
             open_orders_id(),
             user_id(_user_id),
@@ -17,7 +17,7 @@ namespace TermidEngine {
             cash_balance(_initial_balance)
         {}
 
-        Account(Type::UserId _user_id, Type::UserName _username):
+        Account(TermidType::UserId _user_id, TermidType::UserName _username):
             owned_entities(),
             open_orders_id(),
             user_id(_user_id),
@@ -25,18 +25,18 @@ namespace TermidEngine {
             cash_balance(0)
         {}
 
-        void insert_order_id(Type::OrderId order_id);
-        void remove_order_id(Type::OrderId order_id);
-        void bought_entity(Type::TickerSymbol symbol, Type::Currency price, Type::Quantity quantity);
-        void sold_entity(Type::TickerSymbol symbol, Type::Currency price, Type::Quantity quantity);
+        void insert_order_id(TermidType::OrderId order_id);
+        void remove_order_id(TermidType::OrderId order_id);
+        void bought_entity(TermidType::TickerSymbol symbol, TermidType::Currency price, TermidType::Quantity quantity);
+        void sold_entity(TermidType::TickerSymbol symbol, TermidType::Currency price, TermidType::Quantity quantity);
 
     private:
-        std::unordered_map<Type::TickerSymbol, Type::Quantity> owned_entities;
-        std::unordered_set<Type::OrderId> open_orders_id;
+        std::unordered_map<TermidType::TickerSymbol, TermidType::Quantity> owned_entities;
+        std::unordered_set<TermidType::OrderId> open_orders_id;
 
-        Type::UserId user_id;
-        Type::UserName username;
-        Type::Currency cash_balance;
+        TermidType::UserId user_id;
+        TermidType::UserName username;
+        TermidType::Currency cash_balance;
     };
 
 }

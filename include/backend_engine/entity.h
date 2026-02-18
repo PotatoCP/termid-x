@@ -12,22 +12,22 @@ namespace TermidEngine {
 
     class Entity {
     public:
-        using OrderBookPair = std::pair<Type::Currency, std::deque<Type::OrderId>>;
+        using OrderBookPair = std::pair<TermidType::Currency, std::deque<TermidType::OrderId>>;
 
-        Entity(Type::TickerSymbol new_code, Type::Currency new_price):
+        Entity(TermidType::TickerSymbol new_code, TermidType::Currency new_price):
             ticker_symbol(new_code),
             last_traded_price(new_price),
             pending_bid(),
             pending_ask() {}
 
-        Type::TickerSymbol getTickerSymbol() const;
-        Type::Currency getLastTradedPrice() const;
+        TermidType::TickerSymbol getTickerSymbol() const;
+        TermidType::Currency getLastTradedPrice() const;
 
         void pop_best_bid();
         void pop_best_ask();
-        void push_bid(Type::Currency price, Type::OrderId order_id);
-        void push_ask(Type::Currency price, Type::OrderId order_id);
-        void setLastTradedPrice(Type::Currency new_price);
+        void push_bid(TermidType::Currency price, TermidType::OrderId order_id);
+        void push_ask(TermidType::Currency price, TermidType::OrderId order_id);
+        void setLastTradedPrice(TermidType::Currency new_price);
 
         std::vector<OrderBookPair>::reverse_iterator get_best_bid();
         std::vector<OrderBookPair>::reverse_iterator get_best_ask();
@@ -37,10 +37,10 @@ namespace TermidEngine {
 
     private:
 
-        Type::TickerSymbol ticker_symbol;
+        TermidType::TickerSymbol ticker_symbol;
 
         // This will be shown to the user as the current entity price 
-        Type::Currency last_traded_price;
+        TermidType::Currency last_traded_price;
 
         // Using reversed std::vector instead of std::map for the order book
         // Inspired from http://youtube.com/watch?v=sX2nF1fW7kI

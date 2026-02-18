@@ -2,11 +2,11 @@
 
 namespace TermidEngine {
 
-    Type::TickerSymbol Entity::getTickerSymbol() const {
+    TermidType::TickerSymbol Entity::getTickerSymbol() const {
         return this->ticker_symbol;
     }
 
-    Type::Currency Entity::getLastTradedPrice() const {
+    TermidType::Currency Entity::getLastTradedPrice() const {
         return this->last_traded_price;
     }
 
@@ -26,7 +26,7 @@ namespace TermidEngine {
         this->pending_ask.pop_back();
     }
 
-    void Entity::push_bid(Type::Currency price, Type::OrderId order_id) {
+    void Entity::push_bid(TermidType::Currency price, TermidType::OrderId order_id) {
         auto it = this->pending_bid.rbegin();
         for(; it != this->pending_bid.rend(); ++it) {
             if(it->first < price) {
@@ -37,7 +37,7 @@ namespace TermidEngine {
                 return;
             }
         }
-        std::deque<Type::OrderId> order_id_queue({order_id});
+        std::deque<TermidType::OrderId> order_id_queue({order_id});
         this->pending_bid.emplace(
             it.base(),
             std::piecewise_construct,
@@ -46,7 +46,7 @@ namespace TermidEngine {
         );
     }
     
-    void Entity::push_ask(Type::Currency price, Type::OrderId order_id) {
+    void Entity::push_ask(TermidType::Currency price, TermidType::OrderId order_id) {
         auto it = this->pending_ask.rbegin();
         for(; it != this->pending_ask.rend(); ++it) {
             if(it->first > price) {
@@ -57,7 +57,7 @@ namespace TermidEngine {
                 return;
             }
         }
-        std::deque<Type::OrderId> order_id_queue({order_id});
+        std::deque<TermidType::OrderId> order_id_queue({order_id});
         this->pending_ask.emplace(
             it.base(),
             std::piecewise_construct,
@@ -66,7 +66,7 @@ namespace TermidEngine {
         );
     }
 
-    void Entity::setLastTradedPrice(Type::Currency new_price) {
+    void Entity::setLastTradedPrice(TermidType::Currency new_price) {
         this->last_traded_price = new_price;
     }
 

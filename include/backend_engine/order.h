@@ -4,31 +4,31 @@
 
 namespace TermidEngine {
 
-    enum class OrderType {
+    enum class OrderTermidType {
         Bid,
         Ask,
     };
 
     struct Order {
-        Type::OrderId order_id;
-        Type::UserId user_id;
-        Type::TickerSymbol ticker_symbol;
-        OrderType type;
-        Type::Quantity quantity;
-        Type::Currency price;
+        TermidType::OrderId order_id;
+        TermidType::UserId user_id;
+        TermidType::TickerSymbol ticker_symbol;
+        OrderTermidType TermidType;
+        TermidType::Quantity quantity;
+        TermidType::Currency price;
 
         Order(
-            Type::OrderId _order_id,
-            Type::UserId _user_id,
-            Type::TickerSymbol _ticker_symbol,
-            OrderType _type,
-            Type::Quantity _quantity,
-            Type::Currency _price
+            TermidType::OrderId _order_id,
+            TermidType::UserId _user_id,
+            TermidType::TickerSymbol _ticker_symbol,
+            OrderTermidType _TermidType,
+            TermidType::Quantity _quantity,
+            TermidType::Currency _price
         ):
             order_id(_order_id),
             user_id(_user_id),
             ticker_symbol(_ticker_symbol),
-            type(_type),
+            TermidType(_TermidType),
             quantity(_quantity),
             price(_price)
         {}

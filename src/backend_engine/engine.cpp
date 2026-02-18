@@ -6,11 +6,11 @@ namespace TermidEngine {
 
     // Buyer and seller must be guaranteed to exist before calling this function
     void MarketEngine::do_transaction(
-        Type::UserId buyer_id,
-        Type::UserId seller_id,
-        Type::TickerSymbol entity_symbol,
-        Type::Quantity order_quantity,
-        Type::Currency order_price
+        TermidType::UserId buyer_id,
+        TermidType::UserId seller_id,
+        TermidType::TickerSymbol entity_symbol,
+        TermidType::Quantity order_quantity,
+        TermidType::Currency order_price
     ) {
         this->trade_history.emplace_back(
             buyer_id,
@@ -24,11 +24,11 @@ namespace TermidEngine {
         this->entities.at(entity_symbol).setLastTradedPrice(order_price);
     }
 
-    Type::OrderId MarketEngine::place_bid(
-        Type::UserId user_id,
-        Type::TickerSymbol symbol,
-        Type::Quantity order_quantity,
-        Type::Currency price
+    TermidType::OrderId MarketEngine::place_bid(
+        TermidType::UserId user_id,
+        TermidType::TickerSymbol symbol,
+        TermidType::Quantity order_quantity,
+        TermidType::Currency price
     ) {
         auto entity_it = this->entities.find(symbol);
         if(entity_it == this->entities.end()){
@@ -47,7 +47,7 @@ namespace TermidEngine {
         // Match before pushing the bid
         while(!entity.ask_is_empty()) {
             auto current_best_ask = entity.get_best_ask();
-            Type::Currency best_ask_price = current_best_ask->first;
+            TermidType::Currency best_ask_price = current_best_ask->first;
 
             // If the best ask price is more than the current bid price,
             // we can't match the current order.
@@ -68,7 +68,7 @@ namespace TermidEngine {
 
                 auto& ask_order = ask_order_it->second;
 
-                Type::Quantity trade_quantity = std::min(order_quantity, ask_order.quantity);
+                TermidType::Quantity trade_quantity = std::min(order_quantity, ask_order.quantity);
 
                 this->do_transaction(
                     user_id,
@@ -96,7 +96,7 @@ namespace TermidEngine {
             entity.pop_best_ask();
         }
 
-        Type::OrderId current_order_id = ++(this->latest_order_id);
+        TermidType::OrderId current_order_id = ++(this->latest_order_id);
         this->open_orders.emplace(
             std::piecewise_construct,
             std::forward_as_tuple(current_order_id),
@@ -104,7 +104,7 @@ namespace TermidEngine {
                 current_order_id,
                 user_id,
                 symbol,
-                OrderType::Bid,
+                OrderTermidType::Bid,
                 order_quantity,
                 price
             )
@@ -114,11 +114,11 @@ namespace TermidEngine {
         return current_order_id;
     }
 
-    Type::OrderId MarketEngine::place_ask(
-        Type::UserId user_id,
-        Type::TickerSymbol symbol,
-        Type::Quantity order_quantity,
-        Type::Currency price
+    TermidType::OrderId MarketEngine::place_ask(
+        TermidType::UserId user_id,
+        TermidType::TickerSymbol symbol,
+        TermidType::Quantity order_quantity,
+        TermidType::Currency price
     ) {
         auto entity_it = this->entities.find(symbol);
         if(entity_it == this->entities.end()){
@@ -137,7 +137,7 @@ namespace TermidEngine {
         // Match before pushing the ask
         while(!entity.bid_is_empty()) {
             auto current_best_bid = entity.get_best_bid();
-            Type::Currency best_bid_price = current_best_bid->first;
+            TermidType::Currency best_bid_price = current_best_bid->first;
 
             // If the best bid price is less than the current ask price,
             // we can't match the current order.
@@ -158,7 +158,7 @@ namespace TermidEngine {
 
                 auto& bid_order = bid_order_it->second;
 
-                Type::Quantity trade_quantity = std::min(order_quantity, bid_order.quantity);
+                TermidType::Quantity trade_quantity = std::min(order_quantity, bid_order.quantity);
 
                 this->do_transaction(
                     bid_order.user_id,
@@ -194,7 +194,7 @@ namespace TermidEngine {
                 current_order_id,
                 user_id,
                 symbol,
-                OrderType::Ask,
+                OrderTermidType::Ask,
                 order_quantity,
                 price
             )
@@ -204,7 +204,7 @@ namespace TermidEngine {
         return current_order_id;
     }
 
-    void MarketEngine::add_entity(Type::TickerSymbol symbol, Type::Currency price) {
+    void MarketEngine::add_entity(TermidType::TickerSymbol symbol, TermidType::Currency price) {
         this->entities.emplace(
             std::piecewise_construct,
             std::forward_as_tuple(symbol),
@@ -213,9 +213,9 @@ namespace TermidEngine {
     }
 
     void MarketEngine::add_account(
-        Type::UserId user_id,
-        Type::UserName username,
-        Type::Currency initial_balance
+        TermidType::UserId user_id,
+        TermidType::UserName username,
+        TermidType::Currency initial_balance
     ) {
         this->accounts.emplace(
             std::piecewise_construct,
@@ -224,7 +224,7 @@ namespace TermidEngine {
         );
     }
 
-    Type::Currency MarketEngine::get_entity_price(Type::TickerSymbol symbol) const {
+    TermidType::Currency MarketEngine::get_entity_price(TermidType::TickerSymbol symbol) const {
         auto entity_it = this->entities.find(symbol);
         if(entity_it == this->entities.end()){
             // If the entity doesn't exist, return -1 as the price.

@@ -4,18 +4,18 @@
 
 namespace TermidEngine {
     struct Trade {
-        Type::UserId buy_order_id;
-        Type::UserId ask_order_id;
-        Type::TickerSymbol entity_symbol;
-        Type::Quantity quantity;
-        Type::Currency price;
+        TermidType::UserId buy_order_id;
+        TermidType::UserId ask_order_id;
+        TermidType::TickerSymbol entity_symbol;
+        TermidType::Quantity quantity;
+        TermidType::Currency price;
 
         Trade(
-            Type::OrderId _buy_id,
-            Type::OrderId _ask_id,
-            Type::TickerSymbol _entity_symbol,
-            Type::Quantity _quantity,
-            Type::Currency _price
+            TermidType::OrderId _buy_id,
+            TermidType::OrderId _ask_id,
+            TermidType::TickerSymbol _entity_symbol,
+            TermidType::Quantity _quantity,
+            TermidType::Currency _price
         ):
             buy_order_id(_buy_id),
             ask_order_id(_ask_id),

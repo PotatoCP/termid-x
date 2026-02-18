@@ -3,7 +3,7 @@
 #include <iostream>
 #include <cstdint>
 
-namespace Type {
+namespace TermidType {
     using Currency = int32_t;
     using Quantity = uint32_t;
     using OrderId = uint32_t;
