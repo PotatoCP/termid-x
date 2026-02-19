@@ -1,4 +1,4 @@
-#include "backend_engine/entity.h"
+#include "backend_engine/entity.hpp"
 
 namespace TermidEngine {
 

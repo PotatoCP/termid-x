@@ -3,7 +3,7 @@
 #include <random>
 #include <chrono>
 
-#include "backend_engine/engine.h"
+#include "backend_engine/engine.hpp"
 #include "ui_engine/app.cpp"
 
 void test_engine() {

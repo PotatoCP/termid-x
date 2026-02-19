@@ -1,6 +1,6 @@
 #include <algorithm>
 
-#include "backend_engine/engine.h"
+#include "backend_engine/engine.hpp"
 
 namespace TermidEngine {
 

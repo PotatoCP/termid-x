@@ -21,9 +21,12 @@ set(PROJECT_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/include")
 
 set(SOURCES
 	src/main.cpp
+
 	src/backend_engine/account.cpp
 	src/backend_engine/engine.cpp
 	src/backend_engine/entity.cpp
+
+	src/ui_engine/order_book.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES})
